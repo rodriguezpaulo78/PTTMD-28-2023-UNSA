@@ -1,0 +1,55 @@
+# Archivos de Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Binarios y compilados
+bin/
+obj/
+[Bb]uild/
+[Bb]uild[Ll]og.*
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+
+# Publicaciones y temporales
+publish/
+*.dbmdl
+*.bak
+*.sql
+*.mdf
+*.ldf
+
+# Archivos de NuGet
+*.nupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Configs de Rider o VS Code (opcional)
+.idea/
+.vscode/
+
+# Archivos de sistema
+*.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de test
+TestResults/
+*.trx
+
+# Otros
+*.tmp
+*.swp
+*.bak
+*.orig
+*.rej
+
+# Archivos de configuración de usuario que no deben compartirse
+*.userprefs
