@@ -1,6 +1,6 @@
 ﻿namespace PTTMD_28_2023_UNSA
 {
-    partial class Principal
+    partial class CPSistemaReconocimiento
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -28,47 +28,66 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabNivel = new System.Windows.Forms.TabControl();
+            this.tabNivel1 = new System.Windows.Forms.TabPage();
+            this.tabNivel2 = new System.Windows.Forms.TabPage();
+            this.tabNivel3 = new System.Windows.Forms.TabPage();
             this.txcRuta = new System.Windows.Forms.TextBox();
             this.lblRuta = new System.Windows.Forms.Label();
             this.btnExplorar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnAnalizar = new System.Windows.Forms.Button();
             this.trvArbol = new System.Windows.Forms.TreeView();
-            this.tabControl1.SuspendLayout();
+            this.lblArbol = new System.Windows.Forms.Label();
+            this.btnExportarNivel1 = new System.Windows.Forms.Button();
+            this.lsvNivel1 = new System.Windows.Forms.ListView();
+            this.tabNivel.SuspendLayout();
+            this.tabNivel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tabNivel
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(28, 128);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(556, 292);
-            this.tabControl1.TabIndex = 0;
+            this.tabNivel.Controls.Add(this.tabNivel1);
+            this.tabNivel.Controls.Add(this.tabNivel2);
+            this.tabNivel.Controls.Add(this.tabNivel3);
+            this.tabNivel.Location = new System.Drawing.Point(28, 128);
+            this.tabNivel.Name = "tabNivel";
+            this.tabNivel.SelectedIndex = 0;
+            this.tabNivel.Size = new System.Drawing.Size(556, 292);
+            this.tabNivel.TabIndex = 0;
+            this.tabNivel.Tag = "";
             // 
-            // tabPage1
+            // tabNivel1
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(548, 263);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabNivel1.Controls.Add(this.lsvNivel1);
+            this.tabNivel1.Controls.Add(this.btnExportarNivel1);
+            this.tabNivel1.Location = new System.Drawing.Point(4, 25);
+            this.tabNivel1.Name = "tabNivel1";
+            this.tabNivel1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNivel1.Size = new System.Drawing.Size(548, 263);
+            this.tabNivel1.TabIndex = 0;
+            this.tabNivel1.Text = "Nivel 1";
+            this.tabNivel1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tabNivel2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(548, 263);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabNivel2.Location = new System.Drawing.Point(4, 25);
+            this.tabNivel2.Name = "tabNivel2";
+            this.tabNivel2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNivel2.Size = new System.Drawing.Size(548, 263);
+            this.tabNivel2.TabIndex = 1;
+            this.tabNivel2.Text = "Nivel 2";
+            this.tabNivel2.UseVisualStyleBackColor = true;
+            // 
+            // tabNivel3
+            // 
+            this.tabNivel3.Location = new System.Drawing.Point(4, 25);
+            this.tabNivel3.Name = "tabNivel3";
+            this.tabNivel3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNivel3.Size = new System.Drawing.Size(548, 263);
+            this.tabNivel3.TabIndex = 2;
+            this.tabNivel3.Text = "Nivel 3";
+            this.tabNivel3.UseVisualStyleBackColor = true;
             // 
             // txcRuta
             // 
@@ -124,21 +143,51 @@
             this.trvArbol.Size = new System.Drawing.Size(221, 263);
             this.trvArbol.TabIndex = 6;
             // 
+            // lblArbol
+            // 
+            this.lblArbol.AutoSize = true;
+            this.lblArbol.Location = new System.Drawing.Point(587, 128);
+            this.lblArbol.Name = "lblArbol";
+            this.lblArbol.Size = new System.Drawing.Size(118, 16);
+            this.lblArbol.TabIndex = 7;
+            this.lblArbol.Text = "Arbol del Proyecto";
+            // 
+            // btnExportarNivel1
+            // 
+            this.btnExportarNivel1.Location = new System.Drawing.Point(20, 221);
+            this.btnExportarNivel1.Name = "btnExportarNivel1";
+            this.btnExportarNivel1.Size = new System.Drawing.Size(75, 23);
+            this.btnExportarNivel1.TabIndex = 0;
+            this.btnExportarNivel1.Text = "Exportar";
+            this.btnExportarNivel1.UseVisualStyleBackColor = true;
+            this.btnExportarNivel1.Click += new System.EventHandler(this.btnExportarNivel1_Click);
+            // 
+            // lsvNivel1
+            // 
+            this.lsvNivel1.HideSelection = false;
+            this.lsvNivel1.Location = new System.Drawing.Point(20, 16);
+            this.lsvNivel1.Name = "lsvNivel1";
+            this.lsvNivel1.Size = new System.Drawing.Size(510, 199);
+            this.lsvNivel1.TabIndex = 1;
+            this.lsvNivel1.UseCompatibleStateImageBehavior = false;
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 450);
+            this.Controls.Add(this.lblArbol);
             this.Controls.Add(this.trvArbol);
             this.Controls.Add(this.btnAnalizar);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnExplorar);
             this.Controls.Add(this.lblRuta);
             this.Controls.Add(this.txcRuta);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabNivel);
             this.Name = "Principal";
             this.Text = "Form1";
-            this.tabControl1.ResumeLayout(false);
+            this.tabNivel.ResumeLayout(false);
+            this.tabNivel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,15 +195,19 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabControl tabNivel;
+        private System.Windows.Forms.TabPage tabNivel1;
+        private System.Windows.Forms.TabPage tabNivel2;
         private System.Windows.Forms.TextBox txcRuta;
         private System.Windows.Forms.Label lblRuta;
         private System.Windows.Forms.Button btnExplorar;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnAnalizar;
         private System.Windows.Forms.TreeView trvArbol;
+        private System.Windows.Forms.Label lblArbol;
+        private System.Windows.Forms.TabPage tabNivel3;
+        private System.Windows.Forms.Button btnExportarNivel1;
+        private System.Windows.Forms.ListView lsvNivel1;
     }
 }
 
