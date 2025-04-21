@@ -20,7 +20,7 @@ obj/
 publish/
 *.dbmdl
 *.bak
-*.sql
+#*.sql
 *.mdf
 *.ldf
 
