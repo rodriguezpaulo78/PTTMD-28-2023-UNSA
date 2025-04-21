@@ -1,6 +1,6 @@
 ﻿namespace PTTMD_28_2023_UNSA
 {
-    partial class CPSistemaReconocimiento
+    partial class CPInterfazReconocimiento
     {
         /// <summary>
         /// Variable del diseñador necesaria.

@@ -81,16 +81,31 @@
     <Compile Include="CapaDatos\CDClase.cs" />
     <Compile Include="CapaDatos\CDMetodo.cs" />
     <Compile Include="CapaDatos\CDProyecto.cs" />
-    <Compile Include="CapaPresentacion\CPSistemaReconocimiento.cs">
+    <Compile Include="CapaPresentacion\CPInterfazAnalisis.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CapaPresentacion\CPSistemaReconocimiento.Designer.cs">
-      <DependentUpon>CPSistemaReconocimiento.cs</DependentUpon>
+    <Compile Include="CapaPresentacion\CPInterfazAnalisis.Designer.cs">
+      <DependentUpon>CPInterfazAnalisis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\CPInterfazPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\CPInterfazPrincipal.Designer.cs">
+      <DependentUpon>CPInterfazPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaPresentacion\CPInterfazReconocimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CapaPresentacion\CPInterfazReconocimiento.Designer.cs">
+      <DependentUpon>CPInterfazReconocimiento.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CapaPresentacion\CPSistemaReconocimiento.resx">
-      <DependentUpon>CPSistemaReconocimiento.cs</DependentUpon>
+    <EmbeddedResource Include="CapaPresentacion\CPInterfazPrincipal.resx">
+      <DependentUpon>CPInterfazPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CapaPresentacion\CPInterfazReconocimiento.resx">
+      <DependentUpon>CPInterfazReconocimiento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

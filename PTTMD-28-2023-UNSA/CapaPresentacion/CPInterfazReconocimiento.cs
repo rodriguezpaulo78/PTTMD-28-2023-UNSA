@@ -15,9 +15,9 @@ using PTTMD_28_2023_UNSA.CapaControlador;
 
 namespace PTTMD_28_2023_UNSA
 {
-    public partial class CPSistemaReconocimiento : Form
+    public partial class CPInterfazReconocimiento : Form
     {
-        public CPSistemaReconocimiento()
+        public CPInterfazReconocimiento()
         {
             InitializeComponent();
             this.mxInitVar();
