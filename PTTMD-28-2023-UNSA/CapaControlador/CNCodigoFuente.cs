@@ -6,11 +6,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Forms;
 
 namespace PTTMD_28_2023_UNSA.CapaControlador
 {
-    internal class CNCodigoFuente
+    public class CNCodigoFuente
     {
+        public void mxRealizarAnalisisPrimerNivel(string tcRuta, ref ListView toLstView)
+        {
+            // Obtener la ruta seleccionada
+            string rutaCarpeta = tcRuta;
+
+            
+
+            // Obtener los archivos en la carpeta
+            try
+            {
+                // Obtenemos los archivos en la ruta seleccionada
+                string[] archivos = Directory.GetFiles(rutaCarpeta, "*.*", SearchOption.AllDirectories);
+
+
+                foreach (string archivo in archivos)
+                {
+                    // Crear un nuevo ListViewItem para cada archivo
+                    FileInfo fileInfo = new FileInfo(archivo);
+
+                    // Crear un arreglo de columnas con las propiedades del archivo
+                    string[] fila = {
+                        fileInfo.Name,                 // Nombre del archivo
+                        fileInfo.Length.ToString(),    // Tamaño en bytes
+                        fileInfo.Extension,            // Tipo de archivo (extensión)
+                        fileInfo.CreationTime.ToString(), // Fecha de creación
+                        archivo                        // Ruta completa del archivo
+                    };
+
+                    // Agregar la fila al ListView
+                    ListViewItem item = new ListViewItem(fila);
+                    toLstView.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los archivos: " + ex.Message);
+            }
+
+        }
+
         public void mxContarMetodos()
         {
             string path = "Ruta/Al/Archivo.cs"; // <- poné el path a tu archivo C#

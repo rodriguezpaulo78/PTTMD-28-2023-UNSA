@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using PTTMD_28_2023_UNSA.CapaControlador;
+using PTTMD_28_2023_UNSA.CapaDatos;
 
 namespace PTTMD_28_2023_UNSA
 {
@@ -104,50 +105,13 @@ namespace PTTMD_28_2023_UNSA
             CNCodigoFuente cNCodigoFuente = new CNCodigoFuente();
 
             CargarArbolCodigo(this.txcRuta.Text, trvArbol);
-            this.mxRealizarAnalisisPrimerNivel();
+            // Limpiar el ListView antes de cargar nuevos archivos
+            this.lsvNivel1.Items.Clear();
+            cNCodigoFuente.mxRealizarAnalisisPrimerNivel(this.txcRuta.Text, ref lsvNivel1);
             cNCodigoFuente.mxContarMetodos();
         }
 
-        private void mxRealizarAnalisisPrimerNivel()
-        {
-            // Obtener la ruta seleccionada
-            string rutaCarpeta = this.txcRuta.Text;
-
-            // Limpiar el ListView antes de cargar nuevos archivos
-            lsvNivel1.Items.Clear();
-
-            // Obtener los archivos en la carpeta
-            try
-            {
-                // Obtenemos los archivos en la ruta seleccionada
-                string[] archivos = Directory.GetFiles(rutaCarpeta, "*.*", SearchOption.AllDirectories);
-
-
-                foreach (string archivo in archivos)
-                {
-                    // Crear un nuevo ListViewItem para cada archivo
-                    FileInfo fileInfo = new FileInfo(archivo);
-
-                    // Crear un arreglo de columnas con las propiedades del archivo
-                    string[] fila = {
-                        fileInfo.Name,                 // Nombre del archivo
-                        fileInfo.Length.ToString(),    // Tamaño en bytes
-                        fileInfo.Extension,            // Tipo de archivo (extensión)
-                        fileInfo.CreationTime.ToString(), // Fecha de creación
-                        archivo                        // Ruta completa del archivo
-                    };
-
-                    // Agregar la fila al ListView
-                    ListViewItem item = new ListViewItem(fila);
-                    lsvNivel1.Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar los archivos: " + ex.Message);
-            }
-            
-        }
+        
 
         private void btnExportarNivel1_Click(object sender, EventArgs e)
         {
@@ -199,6 +163,34 @@ namespace PTTMD_28_2023_UNSA
                     MessageBox.Show("Error al exportar el archivo: " + ex.Message);
                 }
             }
+        }
+
+        private void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            var repo = new ProyectoMetodos();
+
+            // Insertar
+            var nuevoProyecto = new CDProyecto
+            {
+                Nombre = "ProyectoTest",
+                NumeroArchivos = 3,
+                NumeroClases = 10,
+                LineasCodigo = 2500,
+                NumeroMetodos = 35
+            };
+
+            int idNuevo = repo.Insertar(nuevoProyecto);
+
+            // Obtener
+            var proyecto = repo.ObtenerPorId(idNuevo);
+
+            // Actualizar
+            proyecto.LineasCodigo = 2700;
+            repo.Actualizar(proyecto);
+
+            // Eliminar
+            //repo.Eliminar(proyecto.Id);
+
         }
     }
 }

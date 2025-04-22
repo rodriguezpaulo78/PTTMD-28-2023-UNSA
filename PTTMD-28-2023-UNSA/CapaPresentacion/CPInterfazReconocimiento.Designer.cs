@@ -30,6 +30,8 @@
         {
             this.tabNivel = new System.Windows.Forms.TabControl();
             this.tabNivel1 = new System.Windows.Forms.TabPage();
+            this.lsvNivel1 = new System.Windows.Forms.ListView();
+            this.btnExportarNivel1 = new System.Windows.Forms.Button();
             this.tabNivel2 = new System.Windows.Forms.TabPage();
             this.tabNivel3 = new System.Windows.Forms.TabPage();
             this.txcRuta = new System.Windows.Forms.TextBox();
@@ -39,8 +41,7 @@
             this.btnAnalizar = new System.Windows.Forms.Button();
             this.trvArbol = new System.Windows.Forms.TreeView();
             this.lblArbol = new System.Windows.Forms.Label();
-            this.btnExportarNivel1 = new System.Windows.Forms.Button();
-            this.lsvNivel1 = new System.Windows.Forms.ListView();
+            this.btnRegistrar = new System.Windows.Forms.Button();
             this.tabNivel.SuspendLayout();
             this.tabNivel1.SuspendLayout();
             this.SuspendLayout();
@@ -50,7 +51,7 @@
             this.tabNivel.Controls.Add(this.tabNivel1);
             this.tabNivel.Controls.Add(this.tabNivel2);
             this.tabNivel.Controls.Add(this.tabNivel3);
-            this.tabNivel.Location = new System.Drawing.Point(28, 128);
+            this.tabNivel.Location = new System.Drawing.Point(24, 83);
             this.tabNivel.Name = "tabNivel";
             this.tabNivel.SelectedIndex = 0;
             this.tabNivel.Size = new System.Drawing.Size(556, 292);
@@ -68,6 +69,25 @@
             this.tabNivel1.TabIndex = 0;
             this.tabNivel1.Text = "Nivel 1";
             this.tabNivel1.UseVisualStyleBackColor = true;
+            // 
+            // lsvNivel1
+            // 
+            this.lsvNivel1.HideSelection = false;
+            this.lsvNivel1.Location = new System.Drawing.Point(20, 16);
+            this.lsvNivel1.Name = "lsvNivel1";
+            this.lsvNivel1.Size = new System.Drawing.Size(510, 199);
+            this.lsvNivel1.TabIndex = 1;
+            this.lsvNivel1.UseCompatibleStateImageBehavior = false;
+            // 
+            // btnExportarNivel1
+            // 
+            this.btnExportarNivel1.Location = new System.Drawing.Point(20, 221);
+            this.btnExportarNivel1.Name = "btnExportarNivel1";
+            this.btnExportarNivel1.Size = new System.Drawing.Size(75, 23);
+            this.btnExportarNivel1.TabIndex = 0;
+            this.btnExportarNivel1.Text = "Exportar";
+            this.btnExportarNivel1.UseVisualStyleBackColor = true;
+            this.btnExportarNivel1.Click += new System.EventHandler(this.btnExportarNivel1_Click);
             // 
             // tabNivel2
             // 
@@ -128,7 +148,7 @@
             // 
             // btnAnalizar
             // 
-            this.btnAnalizar.Location = new System.Drawing.Point(602, 78);
+            this.btnAnalizar.Location = new System.Drawing.Point(24, 393);
             this.btnAnalizar.Name = "btnAnalizar";
             this.btnAnalizar.Size = new System.Drawing.Size(202, 23);
             this.btnAnalizar.TabIndex = 5;
@@ -138,7 +158,7 @@
             // 
             // trvArbol
             // 
-            this.trvArbol.Location = new System.Drawing.Point(587, 153);
+            this.trvArbol.Location = new System.Drawing.Point(586, 108);
             this.trvArbol.Name = "trvArbol";
             this.trvArbol.Size = new System.Drawing.Size(221, 263);
             this.trvArbol.TabIndex = 6;
@@ -146,36 +166,28 @@
             // lblArbol
             // 
             this.lblArbol.AutoSize = true;
-            this.lblArbol.Location = new System.Drawing.Point(587, 128);
+            this.lblArbol.Location = new System.Drawing.Point(586, 83);
             this.lblArbol.Name = "lblArbol";
             this.lblArbol.Size = new System.Drawing.Size(118, 16);
             this.lblArbol.TabIndex = 7;
             this.lblArbol.Text = "Arbol del Proyecto";
             // 
-            // btnExportarNivel1
+            // btnRegistrar
             // 
-            this.btnExportarNivel1.Location = new System.Drawing.Point(20, 221);
-            this.btnExportarNivel1.Name = "btnExportarNivel1";
-            this.btnExportarNivel1.Size = new System.Drawing.Size(75, 23);
-            this.btnExportarNivel1.TabIndex = 0;
-            this.btnExportarNivel1.Text = "Exportar";
-            this.btnExportarNivel1.UseVisualStyleBackColor = true;
-            this.btnExportarNivel1.Click += new System.EventHandler(this.btnExportarNivel1_Click);
+            this.btnRegistrar.Location = new System.Drawing.Point(259, 393);
+            this.btnRegistrar.Name = "btnRegistrar";
+            this.btnRegistrar.Size = new System.Drawing.Size(202, 23);
+            this.btnRegistrar.TabIndex = 8;
+            this.btnRegistrar.Text = "Registrar Proyecto";
+            this.btnRegistrar.UseVisualStyleBackColor = true;
+            this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
             // 
-            // lsvNivel1
-            // 
-            this.lsvNivel1.HideSelection = false;
-            this.lsvNivel1.Location = new System.Drawing.Point(20, 16);
-            this.lsvNivel1.Name = "lsvNivel1";
-            this.lsvNivel1.Size = new System.Drawing.Size(510, 199);
-            this.lsvNivel1.TabIndex = 1;
-            this.lsvNivel1.UseCompatibleStateImageBehavior = false;
-            // 
-            // Principal
+            // CPInterfazReconocimiento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 450);
+            this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.lblArbol);
             this.Controls.Add(this.trvArbol);
             this.Controls.Add(this.btnAnalizar);
@@ -184,7 +196,7 @@
             this.Controls.Add(this.lblRuta);
             this.Controls.Add(this.txcRuta);
             this.Controls.Add(this.tabNivel);
-            this.Name = "Principal";
+            this.Name = "CPInterfazReconocimiento";
             this.Text = "Form1";
             this.tabNivel.ResumeLayout(false);
             this.tabNivel1.ResumeLayout(false);
@@ -208,6 +220,7 @@
         private System.Windows.Forms.TabPage tabNivel3;
         private System.Windows.Forms.Button btnExportarNivel1;
         private System.Windows.Forms.ListView lsvNivel1;
+        private System.Windows.Forms.Button btnRegistrar;
     }
 }
 
