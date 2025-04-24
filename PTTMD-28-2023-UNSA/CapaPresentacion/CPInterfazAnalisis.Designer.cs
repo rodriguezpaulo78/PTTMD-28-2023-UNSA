@@ -59,6 +59,7 @@
             this.btnExplorar.TabIndex = 7;
             this.btnExplorar.Text = "Cargar";
             this.btnExplorar.UseVisualStyleBackColor = true;
+            this.btnExplorar.Click += new System.EventHandler(this.btnExplorar_Click);
             // 
             // lblRuta
             // 
@@ -161,7 +162,9 @@
             this.Controls.Add(this.btnExplorar);
             this.Controls.Add(this.lblRuta);
             this.Controls.Add(this.txcRuta);
+            this.MaximizeBox = false;
             this.Name = "CPInterfazAnalisis";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CPInterfazAnalisis";
             this.ResumeLayout(false);
             this.PerformLayout();

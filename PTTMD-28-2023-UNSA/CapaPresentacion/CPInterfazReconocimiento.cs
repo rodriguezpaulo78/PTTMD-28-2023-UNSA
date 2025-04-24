@@ -33,9 +33,27 @@ namespace PTTMD_28_2023_UNSA
             lsvNivel1.Columns.Add("Tipo de archivo", 100);
             lsvNivel1.Columns.Add("Fecha de creación", 150);
             lsvNivel1.Columns.Add("Ruta completa", 300);  // Nueva columna para la ruta
+
+            lsvNivel2.View = View.Details;
+            lsvNivel2.Columns.Add("Clase", 150);
+            lsvNivel2.Columns.Add("Métodos", 70);
+            lsvNivel2.Columns.Add("Propiedades", 80);
+            lsvNivel2.Columns.Add("Líneas Código", 90);
+            lsvNivel2.Columns.Add("Archivo Fuente", 200);
+
+            lsvNivel3.View = View.Details;
+            lsvNivel3.Columns.Add("Clase", 150);
+            lsvNivel3.Columns.Add("Suma ASCII", 100);
+            lsvNivel3.Columns.Add("Archivo", 200);
         }
 
         private void btnExplorar_Click(object sender, EventArgs e)
+        {
+            this.mxAbrirProyecto();
+            this.CargarArbolCodigo(this.txcRuta.Text, trvArbol);
+        }
+
+        private void mxAbrirProyecto()
         {
             using (var dialogo = new FolderBrowserDialog())
             {
@@ -103,15 +121,17 @@ namespace PTTMD_28_2023_UNSA
         private void btnAnalizar_Click(object sender, EventArgs e)
         {
             CNCodigoFuente cNCodigoFuente = new CNCodigoFuente();
-
-            CargarArbolCodigo(this.txcRuta.Text, trvArbol);
+            string[] taArchivos = new string[10];
+           
             // Limpiar el ListView antes de cargar nuevos archivos
             this.lsvNivel1.Items.Clear();
-            cNCodigoFuente.mxRealizarAnalisisPrimerNivel(this.txcRuta.Text, ref lsvNivel1);
-            cNCodigoFuente.mxContarMetodos();
+            cNCodigoFuente.mxRealizarAnalisisPrimerNivel(this.txcRuta.Text, ref lsvNivel1, ref taArchivos);
+            cNCodigoFuente.mxRealizarAnalisisSegundoNivel(taArchivos, ref lsvNivel2);
+            cNCodigoFuente.mxRealizarAnalisisTercerNivel(taArchivos, ref lsvNivel3);
+
         }
 
-        
+
 
         private void btnExportarNivel1_Click(object sender, EventArgs e)
         {
@@ -176,7 +196,8 @@ namespace PTTMD_28_2023_UNSA
                 NumeroArchivos = 3,
                 NumeroClases = 10,
                 LineasCodigo = 2500,
-                NumeroMetodos = 35
+                NumeroMetodos = 35,
+                Ruta = this.txcRuta.Text
             };
 
             int idNuevo = repo.Insertar(nuevoProyecto);
@@ -190,7 +211,14 @@ namespace PTTMD_28_2023_UNSA
 
             // Eliminar
             //repo.Eliminar(proyecto.Id);
+            MessageBox.Show("Proyecto registrado con éxito", "Registro exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

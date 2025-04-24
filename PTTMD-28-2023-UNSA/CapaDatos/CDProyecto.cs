@@ -10,6 +10,7 @@ namespace PTTMD_28_2023_UNSA.CapaDatos
     {
         public CDProyecto() { }
         public int Id { get; set; }
+        public string Ruta { get; set; }
         public string Nombre { get; set; }
         public int NumeroArchivos { get; set; }
         public int NumeroClases { get; set; }

@@ -38,8 +38,9 @@
             this.btnRegistrar.Name = "btnRegistrar";
             this.btnRegistrar.Size = new System.Drawing.Size(271, 60);
             this.btnRegistrar.TabIndex = 0;
-            this.btnRegistrar.Text = "Registrar Proyecto";
+            this.btnRegistrar.Text = "Registrar Cierre de Proyecto";
             this.btnRegistrar.UseVisualStyleBackColor = true;
+            this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
             // 
             // btnAnalizar
             // 
@@ -47,17 +48,21 @@
             this.btnAnalizar.Name = "btnAnalizar";
             this.btnAnalizar.Size = new System.Drawing.Size(271, 60);
             this.btnAnalizar.TabIndex = 1;
-            this.btnAnalizar.Text = "Analizar Diferencias";
+            this.btnAnalizar.Text = "Validación de Cierre de Proyecto";
             this.btnAnalizar.UseVisualStyleBackColor = true;
+            this.btnAnalizar.Click += new System.EventHandler(this.btnAnalizar_Click);
             // 
             // CPInterfazPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(557, 290);
+            this.ClientSize = new System.Drawing.Size(557, 255);
             this.Controls.Add(this.btnAnalizar);
             this.Controls.Add(this.btnRegistrar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "CPInterfazPrincipal";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CPInterfazPrincipal";
             this.ResumeLayout(false);
 

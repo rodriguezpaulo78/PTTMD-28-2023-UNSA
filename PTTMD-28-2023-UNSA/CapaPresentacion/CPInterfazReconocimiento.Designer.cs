@@ -42,8 +42,13 @@
             this.trvArbol = new System.Windows.Forms.TreeView();
             this.lblArbol = new System.Windows.Forms.Label();
             this.btnRegistrar = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
+            this.lsvNivel2 = new System.Windows.Forms.ListView();
+            this.lsvNivel3 = new System.Windows.Forms.ListView();
             this.tabNivel.SuspendLayout();
             this.tabNivel1.SuspendLayout();
+            this.tabNivel2.SuspendLayout();
+            this.tabNivel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabNivel
@@ -91,6 +96,7 @@
             // 
             // tabNivel2
             // 
+            this.tabNivel2.Controls.Add(this.lsvNivel2);
             this.tabNivel2.Location = new System.Drawing.Point(4, 25);
             this.tabNivel2.Name = "tabNivel2";
             this.tabNivel2.Padding = new System.Windows.Forms.Padding(3);
@@ -101,6 +107,7 @@
             // 
             // tabNivel3
             // 
+            this.tabNivel3.Controls.Add(this.lsvNivel3);
             this.tabNivel3.Location = new System.Drawing.Point(4, 25);
             this.tabNivel3.Name = "tabNivel3";
             this.tabNivel3.Padding = new System.Windows.Forms.Padding(3);
@@ -182,11 +189,40 @@
             this.btnRegistrar.UseVisualStyleBackColor = true;
             this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
             // 
+            // btnSalir
+            // 
+            this.btnSalir.Location = new System.Drawing.Point(707, 393);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(97, 23);
+            this.btnSalir.TabIndex = 9;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            // 
+            // lsvNivel2
+            // 
+            this.lsvNivel2.HideSelection = false;
+            this.lsvNivel2.Location = new System.Drawing.Point(19, 32);
+            this.lsvNivel2.Name = "lsvNivel2";
+            this.lsvNivel2.Size = new System.Drawing.Size(510, 199);
+            this.lsvNivel2.TabIndex = 2;
+            this.lsvNivel2.UseCompatibleStateImageBehavior = false;
+            // 
+            // lsvNivel3
+            // 
+            this.lsvNivel3.HideSelection = false;
+            this.lsvNivel3.Location = new System.Drawing.Point(19, 32);
+            this.lsvNivel3.Name = "lsvNivel3";
+            this.lsvNivel3.Size = new System.Drawing.Size(510, 199);
+            this.lsvNivel3.TabIndex = 3;
+            this.lsvNivel3.UseCompatibleStateImageBehavior = false;
+            // 
             // CPInterfazReconocimiento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 450);
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.lblArbol);
             this.Controls.Add(this.trvArbol);
@@ -196,10 +232,15 @@
             this.Controls.Add(this.lblRuta);
             this.Controls.Add(this.txcRuta);
             this.Controls.Add(this.tabNivel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "CPInterfazReconocimiento";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.tabNivel.ResumeLayout(false);
             this.tabNivel1.ResumeLayout(false);
+            this.tabNivel2.ResumeLayout(false);
+            this.tabNivel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,6 +262,9 @@
         private System.Windows.Forms.Button btnExportarNivel1;
         private System.Windows.Forms.ListView lsvNivel1;
         private System.Windows.Forms.Button btnRegistrar;
+        private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.ListView lsvNivel2;
+        private System.Windows.Forms.ListView lsvNivel3;
     }
 }
 

@@ -9,8 +9,8 @@ public class ProyectoMetodos
     public int Insertar(CDProyecto proyecto)
     {
         IDbConnection db = DbConnectionFactory.GetConnection();
-        string sql = @"INSERT INTO Proyecto (Nombre, NumeroArchivos, NumeroClases, LineasCodigo, NumeroMetodos)
-                       VALUES (@Nombre, @NumeroArchivos, @NumeroClases, @LineasCodigo, @NumeroMetodos);
+        string sql = @"INSERT INTO Proyecto (Nombre, NumeroArchivos, NumeroClases, LineasCodigo, NumeroMetodos, Ruta)
+                       VALUES (@Nombre, @NumeroArchivos, @NumeroClases, @LineasCodigo, @NumeroMetodos, @Ruta);
                        SELECT CAST(SCOPE_IDENTITY() as int)";
         return db.QuerySingle<int>(sql, proyecto);
     }
@@ -35,7 +35,9 @@ public class ProyectoMetodos
                            NumeroArchivos = @NumeroArchivos,
                            NumeroClases = @NumeroClases,
                            LineasCodigo = @LineasCodigo,
-                           NumeroMetodos = @NumeroMetodos
+                           NumeroMetodos = @NumeroMetodos,
+                           Ruta = @Ruta
+
                        WHERE Id = @Id";
         db.Execute(sql, proyecto);
     }

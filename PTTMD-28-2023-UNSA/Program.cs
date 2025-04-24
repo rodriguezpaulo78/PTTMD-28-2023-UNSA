@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PTTMD_28_2023_UNSA.CapaPresentacion;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace PTTMD_28_2023_UNSA
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CPInterfazReconocimiento());
+            Application.Run(new CPInterfazPrincipal());
         }
     }
 }

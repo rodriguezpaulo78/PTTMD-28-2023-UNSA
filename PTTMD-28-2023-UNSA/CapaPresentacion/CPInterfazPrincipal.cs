@@ -16,5 +16,21 @@ namespace PTTMD_28_2023_UNSA.CapaPresentacion
         {
             InitializeComponent();
         }
+
+        private void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            CPInterfazReconocimiento form2 = new CPInterfazReconocimiento();
+            this.Hide();
+            form2.ShowDialog();
+            this.Show();
+        }
+
+        private void btnAnalizar_Click(object sender, EventArgs e)
+        {
+            CPInterfazAnalisis form2 = new CPInterfazAnalisis();
+            this.Hide();
+            form2.ShowDialog();
+            this.Show();
+        }
     }
 }

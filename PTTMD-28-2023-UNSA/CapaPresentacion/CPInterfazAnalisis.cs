@@ -16,5 +16,18 @@ namespace PTTMD_28_2023_UNSA.CapaPresentacion
         {
             InitializeComponent();
         }
+
+        private void btnExplorar_Click(object sender, EventArgs e)
+        {
+            var formSelector = new CPProyectos();
+
+            formSelector.AlSeleccionarProyecto = (proyecto) =>
+            {
+                txcRuta.Text = proyecto;
+                // Guardar ID, cargar datos del proyecto, etc.
+            };
+
+            formSelector.Show();
+        }
     }
 }
