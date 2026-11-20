@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using PTTMD_28_2023_UNSA.CapaControlador;
+using PTTMD_28_2023_UNSA.CapaDatos;
 using PTTMD_28_2023_UNSA.CapaDatos.Modelos;
 using PTTMD_28_2023_UNSA.Reportes;
 
@@ -19,6 +21,10 @@ namespace PTTMD_28_2023_UNSA.CapaPresentacion
     {
         // Resultado de la última comparación ejecutada
         private Comparacion poComparacion;
+
+        // Datos de la línea base cargada (vacíos si la versión base se analizó desde una carpeta o un .zip)
+        private string pcHashLineaBase = "";
+        private bool plLineaBaseIntegra = true;
 
         public CPInterfazAnalisis()
         {
@@ -42,6 +48,36 @@ namespace PTTMD_28_2023_UNSA.CapaPresentacion
             this.mxElegirCarpeta(txcRutaNueva);
         }
 
+        // La versión base puede ser la línea base guardada al cerrar el proyecto (.lineabase.xml) o un .zip
+        private void btnAbrirBase_Click(object sender, EventArgs e)
+        {
+            this.mxElegirArchivo(txcRutaBase, "Línea base del cierre (*.xml)|*.xml|Proyecto comprimido (*.zip)|*.zip");
+        }
+
+        private void btnAbrirNueva_Click(object sender, EventArgs e)
+        {
+            this.mxElegirArchivo(txcRutaNueva, "Proyecto comprimido (*.zip)|*.zip");
+        }
+
+        private void mxElegirArchivo(TextBox toDestino, string tcFiltro)
+        {
+            using (var dialogo = new OpenFileDialog())
+            {
+                dialogo.Filter = tcFiltro;
+                if (dialogo.ShowDialog(this) == DialogResult.OK) toDestino.Text = dialogo.FileName;
+            }
+        }
+
+        private static bool mxEsArchivo(string tcRuta, string tcExtension)
+        {
+            return File.Exists(tcRuta) && Path.GetExtension(tcRuta).Equals(tcExtension, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool mxRutaValida(string tcRuta, bool tlAceptaLineaBase)
+        {
+            return Directory.Exists(tcRuta) || mxEsArchivo(tcRuta, ".zip") || (tlAceptaLineaBase && mxEsArchivo(tcRuta, ".xml"));
+        }
+
         private void mxElegirCarpeta(TextBox toDestino)
         {
             using (var dialogo = new FolderBrowserDialog())
@@ -54,9 +90,9 @@ namespace PTTMD_28_2023_UNSA.CapaPresentacion
 
         private void btnAnalizar_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(txcRutaBase.Text) || !Directory.Exists(txcRutaNueva.Text))
+            if (!mxRutaValida(txcRutaBase.Text, true) || !mxRutaValida(txcRutaNueva.Text, false))
             {
-                MessageBox.Show(this, "Seleccione las dos carpetas: la versión base y la versión a validar.", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, "Seleccione la versión base (carpeta, .zip o línea base .xml) y la versión a validar (carpeta o .zip).", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -65,7 +101,23 @@ namespace PTTMD_28_2023_UNSA.CapaPresentacion
             {
                 // 1. Análisis estructural de cada versión
                 var analisis = new CNAnalisisEstructural();
-                Evaluacion evaluacionBase = analisis.mxAnalizar(txcRutaBase.Text);
+                Evaluacion evaluacionBase;
+                if (mxEsArchivo(txcRutaBase.Text, ".xml"))
+                {
+                    // Etapa 5: verificación contra el cierre registrado
+                    evaluacionBase = LineaBaseCD.mxCargar(txcRutaBase.Text);
+                    pcHashLineaBase = LineaBaseCD.mxHashArchivo(txcRutaBase.Text);
+                    plLineaBaseIntegra = CNAnalisisEstructural.mxVerificarFirma(evaluacionBase);
+                    if (!plLineaBaseIntegra)
+                        MessageBox.Show(this, "La línea base fue modificada después de generarse: su firma no coincide con su contenido.\r\n" +
+                                        "Los resultados no son confiables.", "Línea base alterada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    evaluacionBase = analisis.mxAnalizar(txcRutaBase.Text);
+                    pcHashLineaBase = "";
+                    plLineaBaseIntegra = true;
+                }
                 Evaluacion evaluacionNueva = analisis.mxAnalizar(txcRutaNueva.Text);
 
                 // 2. Comparación y clasificación con las reglas del modelo
@@ -75,8 +127,9 @@ namespace PTTMD_28_2023_UNSA.CapaPresentacion
                 // 3. Presentación de resultados
                 this.mxCargarArbol(evaluacionBase, trvArbol);
                 this.mxCargarArbol(evaluacionNueva, trvArbolNueva);
-                txcResumen.Text = CNReporteResultados.mxResumen(poComparacion).Replace("\r\n", "\n").Replace("\n", "\r\n");
+                txcResumen.Text = (this.mxTextoVerificacion() + CNReporteResultados.mxResumen(poComparacion)).Replace("\r\n", "\n").Replace("\n", "\r\n");
                 btnExportar.Enabled = true;
+                btnInforme.Enabled = true;
                 this.mxMostrarAnomalias();
             }
             catch (Exception ex)
@@ -86,6 +139,50 @@ namespace PTTMD_28_2023_UNSA.CapaPresentacion
             finally
             {
                 Cursor = Cursors.Default;
+            }
+        }
+
+        // Resultado de la verificación de cierre, al inicio del resumen
+        private string mxTextoVerificacion()
+        {
+            if (poComparacion == null) return "";
+            string lcTexto = poComparacion.mxSonIdenticas()
+                ? "VERIFICACIÓN DE CIERRE: la versión coincide con el cierre registrado.\n"
+                : "VERIFICACIÓN DE CIERRE: la versión NO coincide con el cierre registrado.\n";
+            if (!string.IsNullOrEmpty(pcHashLineaBase))
+                lcTexto += "Línea base: " + (plLineaBaseIntegra ? "íntegra" : "ALTERADA") + " (SHA-256 del archivo: " + pcHashLineaBase + ")\n";
+            return lcTexto + "\n";
+        }
+
+        // Informe de verificación de cierre en HTML (etapas 5 y 7), con las mismas secciones del documento de cierre
+        private void btnInforme_Click(object sender, EventArgs e)
+        {
+            if (poComparacion == null) return;
+            string lcProyecto = string.IsNullOrEmpty(poComparacion.poEvaluacionBase.pcNomVersion)
+                ? Path.GetFileNameWithoutExtension(poComparacion.poEvaluacionNueva.pcRuta.TrimEnd('\\', '/'))
+                : poComparacion.poEvaluacionBase.pcNomVersion;
+            using (var dialogo = new SaveFileDialog())
+            {
+                dialogo.Filter = "Documento HTML (*.html)|*.html";
+                dialogo.FileName = "InformeVerificacion_" + lcProyecto + "_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".html";
+                if (dialogo.ShowDialog(this) != DialogResult.OK) return;
+                try
+                {
+                    var datos = new CNDocumentoCierre.DatosEmision
+                    {
+                        pcProyecto = lcProyecto,
+                        pcResponsable = Environment.UserName,
+                        pcHashLineaBase = pcHashLineaBase,
+                        pcArchivoLineaBase = string.IsNullOrEmpty(pcHashLineaBase) ? "" : Path.GetFileName(txcRutaBase.Text)
+                    };
+                    CNDocumentoCierre.mxGuardar(CNDocumentoCierre.mxGenerarHtml(poComparacion.poEvaluacionNueva, datos, poComparacion), dialogo.FileName);
+                    if (MessageBox.Show(this, "Informe generado. ¿Desea abrirlo?", "Informe", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                        Process.Start(dialogo.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, "No se pudo generar el informe:\r\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -166,7 +263,10 @@ namespace PTTMD_28_2023_UNSA.CapaPresentacion
             trvArbolNueva.Nodes.Clear();
             dgvAnomalias.Rows.Clear();
             poComparacion = null;
+            pcHashLineaBase = "";
+            plLineaBaseIntegra = true;
             btnExportar.Enabled = false;
+            btnInforme.Enabled = false;
         }
     }
 }

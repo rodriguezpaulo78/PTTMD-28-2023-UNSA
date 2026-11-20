@@ -82,6 +82,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CapaDatos\AnomaliaCD.cs" />
@@ -139,6 +141,8 @@
     <Compile Include="CapaControlador\CNAnalisisEstructural.cs" />
     <Compile Include="CapaControlador\CNComparacionVersiones.cs" />
     <Compile Include="Reportes\CNReporteResultados.cs" />
+    <Compile Include="Reportes\CNDocumentoCierre.cs" />
+    <Compile Include="CapaDatos\LineaBaseCD.cs" />
     <Compile Include="CapaDatos\Modelos\Enumeraciones.cs" />
     <Compile Include="CapaDatos\Modelos\ReglaDeteccion.cs" />
     <Compile Include="CapaControlador\CNReglasDeteccion.cs" />

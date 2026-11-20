@@ -151,6 +151,21 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
                 return;
             }
 
+            // Archivos de configuración, de proyecto o de recursos: cualquier cambio de contenido se señala,
+            // aunque no cambie el número de líneas (por ejemplo, una cadena de conexión distinta).
+            if (!CNAnalisisEstructural.mxEsCodigo(n.pcNombre))
+            {
+                double cambiado = Utilitarios.mxPorcentajeCambiado(b.paLineasNormalizadas, n.paLineasNormalizadas);
+                mxAgregar(new Anomalia
+                {
+                    pnNivel = NivelElemento.Archivo, pcArchivo = n.pcRuta, pcElemento = "", pnCambio = TipoCambio.Modificado,
+                    pcMetrica = "Contenido del archivo", pcValorBase = b.pnLineas + " líneas", pcValorNuevo = n.pnLineas + " líneas", pcVariacion = mxPct(cambiado) + " cambió",
+                    pnSeveridad = poReglas.mxSeveridadFija("archivo.configuracion"), pcRegla = "archivo.configuracion",
+                    pcDescripcion = "Cambió un archivo de configuración, de proyecto o de recursos (" + mxPct(cambiado) + " de su contenido). Revise que el cambio esté autorizado."
+                });
+                return;
+            }
+
             double variacion = Utilitarios.mxVariacionPorcentual(b.pnLineas, n.pnLineas);
             mxAgregar(new Anomalia
             {

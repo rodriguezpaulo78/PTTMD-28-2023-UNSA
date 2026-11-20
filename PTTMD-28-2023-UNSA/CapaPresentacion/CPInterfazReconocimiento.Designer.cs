@@ -45,6 +45,12 @@
             this.btnSalir = new System.Windows.Forms.Button();
             this.lsvNivel2 = new System.Windows.Forms.ListView();
             this.lsvNivel3 = new System.Windows.Forms.ListView();
+            this.btnAbrirZip = new System.Windows.Forms.Button();
+            this.btnDocumentoCierre = new System.Windows.Forms.Button();
+            this.lblResponsable = new System.Windows.Forms.Label();
+            this.txcResponsable = new System.Windows.Forms.TextBox();
+            this.lblCargo = new System.Windows.Forms.Label();
+            this.txcCargo = new System.Windows.Forms.TextBox();
             this.tabNivel.SuspendLayout();
             this.tabNivel1.SuspendLayout();
             this.tabNivel2.SuspendLayout();
@@ -217,11 +223,69 @@
             this.lsvNivel3.TabIndex = 3;
             this.lsvNivel3.UseCompatibleStateImageBehavior = false;
             // 
+            // btnAbrirZip
+            // 
+            this.btnAbrirZip.Location = new System.Drawing.Point(602, 4);
+            this.btnAbrirZip.Name = "btnAbrirZip";
+            this.btnAbrirZip.Size = new System.Drawing.Size(97, 23);
+            this.btnAbrirZip.TabIndex = 10;
+            this.btnAbrirZip.Text = "Abrir .zip";
+            this.btnAbrirZip.UseVisualStyleBackColor = true;
+            this.btnAbrirZip.Click += new System.EventHandler(this.btnAbrirZip_Click);
+            // 
+            // btnDocumentoCierre
+            // 
+            this.btnDocumentoCierre.Location = new System.Drawing.Point(478, 393);
+            this.btnDocumentoCierre.Name = "btnDocumentoCierre";
+            this.btnDocumentoCierre.Size = new System.Drawing.Size(212, 23);
+            this.btnDocumentoCierre.TabIndex = 11;
+            this.btnDocumentoCierre.Text = "Generar Documento de Cierre";
+            this.btnDocumentoCierre.UseVisualStyleBackColor = true;
+            this.btnDocumentoCierre.Click += new System.EventHandler(this.btnDocumentoCierre_Click);
+            // 
+            // lblResponsable
+            // 
+            this.lblResponsable.AutoSize = true;
+            this.lblResponsable.Location = new System.Drawing.Point(24, 435);
+            this.lblResponsable.Name = "lblResponsable";
+            this.lblResponsable.Size = new System.Drawing.Size(89, 16);
+            this.lblResponsable.TabIndex = 12;
+            this.lblResponsable.Text = "Responsable:";
+            // 
+            // txcResponsable
+            // 
+            this.txcResponsable.Location = new System.Drawing.Point(119, 432);
+            this.txcResponsable.Name = "txcResponsable";
+            this.txcResponsable.Size = new System.Drawing.Size(250, 22);
+            this.txcResponsable.TabIndex = 13;
+            // 
+            // lblCargo
+            // 
+            this.lblCargo.AutoSize = true;
+            this.lblCargo.Location = new System.Drawing.Point(385, 435);
+            this.lblCargo.Name = "lblCargo";
+            this.lblCargo.Size = new System.Drawing.Size(46, 16);
+            this.lblCargo.TabIndex = 14;
+            this.lblCargo.Text = "Cargo:";
+            // 
+            // txcCargo
+            // 
+            this.txcCargo.Location = new System.Drawing.Point(440, 432);
+            this.txcCargo.Name = "txcCargo";
+            this.txcCargo.Size = new System.Drawing.Size(250, 22);
+            this.txcCargo.TabIndex = 15;
+            // 
             // CPInterfazReconocimiento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 450);
+            this.ClientSize = new System.Drawing.Size(820, 470);
+            this.Controls.Add(this.txcCargo);
+            this.Controls.Add(this.lblCargo);
+            this.Controls.Add(this.txcResponsable);
+            this.Controls.Add(this.lblResponsable);
+            this.Controls.Add(this.btnDocumentoCierre);
+            this.Controls.Add(this.btnAbrirZip);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.lblArbol);
@@ -265,6 +329,12 @@
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.ListView lsvNivel2;
         private System.Windows.Forms.ListView lsvNivel3;
+        private System.Windows.Forms.Button btnAbrirZip;
+        private System.Windows.Forms.Button btnDocumentoCierre;
+        private System.Windows.Forms.Label lblResponsable;
+        private System.Windows.Forms.TextBox txcResponsable;
+        private System.Windows.Forms.Label lblCargo;
+        private System.Windows.Forms.TextBox txcCargo;
     }
 }
 

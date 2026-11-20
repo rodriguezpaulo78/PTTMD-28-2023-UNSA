@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Windows.Forms;
 using PTTMD_28_2023_UNSA.CapaControlador;
 using PTTMD_28_2023_UNSA.CapaDatos;
 using PTTMD_28_2023_UNSA.CapaDatos.Modelos;
+using PTTMD_28_2023_UNSA.Reportes;
 
 namespace PTTMD_28_2023_UNSA
 {
@@ -27,6 +29,9 @@ namespace PTTMD_28_2023_UNSA
 
         private void mxInitVar()
         {
+            this.Text = "Registro de Cierre de Proyecto";
+            txcResponsable.Text = Environment.UserName;
+
             // Nivel 1: archivos
             lsvNivel1.View = View.Details;
             lsvNivel1.Columns.Add("Archivo", 220);
@@ -64,6 +69,16 @@ namespace PTTMD_28_2023_UNSA
             }
         }
 
+        private void btnAbrirZip_Click(object sender, EventArgs e)
+        {
+            using (var dialogo = new OpenFileDialog())
+            {
+                dialogo.Title = "Seleccione el proyecto comprimido";
+                dialogo.Filter = "Proyecto comprimido (*.zip)|*.zip";
+                if (dialogo.ShowDialog(this) == DialogResult.OK) txcRuta.Text = dialogo.FileName;
+            }
+        }
+
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             txcRuta.Clear();
@@ -76,9 +91,10 @@ namespace PTTMD_28_2023_UNSA
 
         private void btnAnalizar_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(txcRuta.Text))
+            bool esZip = File.Exists(txcRuta.Text) && Path.GetExtension(txcRuta.Text).Equals(".zip", StringComparison.OrdinalIgnoreCase);
+            if (!Directory.Exists(txcRuta.Text) && !esZip)
             {
-                MessageBox.Show(this, "Seleccione la carpeta del proyecto.", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, "Seleccione la carpeta del proyecto o un archivo .zip.", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -204,6 +220,61 @@ namespace PTTMD_28_2023_UNSA
             catch (Exception ex)
             {
                 MessageBox.Show(this, "No se pudo registrar en la base de datos:\r\n" + ex.Message, "Base de datos no disponible", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        /// <summary>
+        /// Genera el documento de parámetros de cierre (HTML) y guarda junto a él la línea base (.lineabase.xml),
+        /// que luego se carga en la pantalla de validación para verificar versiones posteriores.
+        /// </summary>
+        private void btnDocumentoCierre_Click(object sender, EventArgs e)
+        {
+            if (poEvaluacion == null)
+            {
+                MessageBox.Show(this, "Primero realice el análisis del proyecto.", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string lcProyecto = Path.GetFileNameWithoutExtension(poEvaluacion.pcRuta.TrimEnd('\\', '/'));
+            using (var dialogo = new SaveFileDialog())
+            {
+                dialogo.Title = "Guardar documento de parámetros de cierre";
+                dialogo.Filter = "Documento HTML (*.html)|*.html";
+                dialogo.FileName = "DocumentoCierre_" + lcProyecto + "_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".html";
+                if (dialogo.ShowDialog(this) != DialogResult.OK) return;
+
+                try
+                {
+                    poEvaluacion.pcResponsable = txcResponsable.Text.Trim();
+                    poEvaluacion.pcNomVersion = lcProyecto;
+
+                    // 1. Línea base junto al documento
+                    string lcLineaBase = Path.Combine(Path.GetDirectoryName(dialogo.FileName),
+                                                      Path.GetFileNameWithoutExtension(dialogo.FileName) + LineaBaseCD.pcExtension);
+                    string lcHash = LineaBaseCD.mxGuardar(poEvaluacion, lcLineaBase);
+
+                    // 2. Documento de parámetros de cierre
+                    var datos = new CNDocumentoCierre.DatosEmision
+                    {
+                        pcProyecto = lcProyecto,
+                        pcResponsable = txcResponsable.Text.Trim(),
+                        pcCargo = txcCargo.Text.Trim(),
+                        pcHashLineaBase = lcHash,
+                        pcArchivoLineaBase = Path.GetFileName(lcLineaBase)
+                    };
+                    CNDocumentoCierre.mxGuardar(CNDocumentoCierre.mxGenerarHtml(poEvaluacion, datos, null), dialogo.FileName);
+
+                    var respuesta = MessageBox.Show(this,
+                        "Se generaron:\r\n- " + Path.GetFileName(dialogo.FileName) + "\r\n- " + Path.GetFileName(lcLineaBase) +
+                        "\r\n\r\nCódigo de cierre: " + CNDocumentoCierre.mxCodigoCierre(lcProyecto, poEvaluacion) +
+                        "\r\n\r\nGuarde la línea base: es la que se carga para validar el cierre.\r\n¿Desea abrir el documento?",
+                        "Documento de cierre", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (respuesta == DialogResult.Yes) Process.Start(dialogo.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, "No se pudo generar el documento de cierre:\r\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

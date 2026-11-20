@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -25,12 +26,87 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
         /// <summary>Si es verdadero, se omiten los archivos generados por herramientas (*.Designer.cs, *.g.cs).</summary>
         public bool plExcluirGenerados { get; set; }
 
-        public CNAnalisisEstructural() { plExcluirGenerados = true; }
+        /// <summary>
+        /// Archivos que no son código C# pero forman parte del proyecto (configuración, proyecto, recursos).
+        /// Se incluyen en la exploración física: un cambio en ellos (por ejemplo, la cadena de conexión) también es una intervención.
+        /// </summary>
+        public static readonly string[] paExtensionesNoCodigo = { ".config", ".csproj", ".sln", ".resx", ".settings", ".json" };
 
+        /// <summary>Si es verdadero, la exploración física incluye los archivos de paExtensionesNoCodigo.</summary>
+        public bool plIncluirNoCodigo { get; set; }
+
+        public CNAnalisisEstructural() { plExcluirGenerados = true; plIncluirNoCodigo = true; }
+
+        /// <summary>Verdadero si el archivo es código fuente C#.</summary>
+        public static bool mxEsCodigo(string tcNombreArchivo)
+        {
+            return string.Equals(Path.GetExtension(tcNombreArchivo), ".cs", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Firma estructural de una versión: SHA-256 de la ruta y el hash lógico de cada archivo, en orden.
+        /// Se usa al analizar y también para verificar que una línea base guardada no fue alterada.
+        /// </summary>
+        public static string mxCalcularFirma(Evaluacion toEvaluacion)
+        {
+            var sb = new StringBuilder();
+            foreach (var a in toEvaluacion.paArchivos.OrderBy(x => x.pcRuta, StringComparer.OrdinalIgnoreCase))
+                sb.Append(a.pcRuta.ToLowerInvariant()).Append('|').Append(a.pcHashLogico).Append('\n');
+            return Utilitarios.mxSha256(sb.ToString());
+        }
+
+        /// <summary>
+        /// Verdadero si la firma guardada en una evaluación coincide con la que se recalcula a partir de sus archivos.
+        /// Si es falso, la línea base fue editada después de generarse.
+        /// </summary>
+        public static bool mxVerificarFirma(Evaluacion toEvaluacion)
+        {
+            if (toEvaluacion == null || string.IsNullOrEmpty(toEvaluacion.pcFirmaEstructural)) return false;
+            return string.Equals(mxCalcularFirma(toEvaluacion), toEvaluacion.pcFirmaEstructural, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Analiza una versión del proyecto. Acepta una carpeta o un archivo .zip;
+        /// el .zip se descomprime en una carpeta temporal que se borra al terminar.
+        /// </summary>
         public Evaluacion mxAnalizar(string tcRutaProyecto)
         {
+            if (!string.IsNullOrWhiteSpace(tcRutaProyecto) && File.Exists(tcRutaProyecto) &&
+                string.Equals(Path.GetExtension(tcRutaProyecto), ".zip", StringComparison.OrdinalIgnoreCase))
+                return mxAnalizarZip(tcRutaProyecto);
+
+            return mxAnalizarCarpeta(tcRutaProyecto);
+        }
+
+        private Evaluacion mxAnalizarZip(string tcRutaZip)
+        {
+            string temporal = Path.Combine(Path.GetTempPath(), "PTTMD_" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                ZipFile.ExtractToDirectory(tcRutaZip, temporal);
+
+                // Si el .zip contiene una sola carpeta raíz, esa carpeta es el proyecto
+                // (así las rutas relativas coinciden con las de un análisis por carpeta).
+                string raiz = temporal;
+                if (Directory.GetFiles(temporal).Length == 0 && Directory.GetDirectories(temporal).Length == 1)
+                    raiz = Directory.GetDirectories(temporal)[0];
+
+                Evaluacion evaluacion = mxAnalizarCarpeta(raiz);
+                evaluacion.pcRuta = tcRutaZip;
+                return evaluacion;
+            }
+            finally
+            {
+                try { if (Directory.Exists(temporal)) Directory.Delete(temporal, true); }
+                catch (IOException) { }
+                catch (UnauthorizedAccessException) { }
+            }
+        }
+
+        private Evaluacion mxAnalizarCarpeta(string tcRutaProyecto)
+        {
             if (string.IsNullOrWhiteSpace(tcRutaProyecto) || !Directory.Exists(tcRutaProyecto))
-                throw new DirectoryNotFoundException("No existe la carpeta: " + tcRutaProyecto);
+                throw new DirectoryNotFoundException("No existe la carpeta o el archivo .zip: " + tcRutaProyecto);
 
             var reloj = Stopwatch.StartNew();
             var proyecto = new Evaluacion { pcRuta = tcRutaProyecto, pdFecEval = DateTime.Now };
@@ -46,15 +122,14 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
             // Fase 4: métricas globales del proyecto
             proyecto.pnTotalArchivos = proyecto.paArchivos.Count;
             proyecto.pnTotalClases = proyecto.paArchivos.Sum(a => a.paClases.Count);
-            proyecto.pnTotalLineas = proyecto.paArchivos.Sum(a => a.pnLineas);
+            // Las líneas de código cuentan solo archivos C#; los de configuración se registran aparte
+            proyecto.pnTotalLineas = proyecto.paArchivos.Where(a => mxEsCodigo(a.pcNombre)).Sum(a => a.pnLineas);
             var metodos = proyecto.paArchivos.SelectMany(a => a.paClases).SelectMany(c => c.paMetodos).ToList();
             proyecto.pnTotalMetodos = metodos.Count;
             proyecto.pnComplejidadPromedio = metodos.Count == 0 ? 0 : Math.Round(metodos.Average(m => (double)m.pnComplejidad), 2);
 
             // Fase 5: firma estructural de la versión
-            var sb = new StringBuilder();
-            foreach (var a in proyecto.paArchivos) sb.Append(a.pcRuta.ToLowerInvariant()).Append('|').Append(a.pcHashLogico).Append('\n');
-            proyecto.pcFirmaEstructural = Utilitarios.mxSha256(sb.ToString());
+            proyecto.pcFirmaEstructural = mxCalcularFirma(proyecto);
 
             reloj.Stop();
             proyecto.pnMilisegundos = reloj.ElapsedMilliseconds;
@@ -63,8 +138,13 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
 
         private IEnumerable<string> mxListarArchivos(string tcRaiz)
         {
-            foreach (string ruta in Directory.GetFiles(tcRaiz, "*.cs", SearchOption.AllDirectories))
+            foreach (string ruta in Directory.GetFiles(tcRaiz, "*", SearchOption.AllDirectories))
             {
+                string extension = Path.GetExtension(ruta);
+                bool esCodigo = string.Equals(extension, ".cs", StringComparison.OrdinalIgnoreCase);
+                bool esNoCodigo = plIncluirNoCodigo && paExtensionesNoCodigo.Contains(extension, StringComparer.OrdinalIgnoreCase);
+                if (!esCodigo && !esNoCodigo) continue;
+
                 string relativa = Utilitarios.mxRutaRelativa(tcRaiz, ruta);
                 string[] partes = relativa.Split('/');
                 bool excluida = false;
@@ -72,7 +152,7 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
                     if (paCarpetasExcluidas.Contains(partes[i], StringComparer.OrdinalIgnoreCase)) { excluida = true; break; }
                 if (excluida) continue;
 
-                if (plExcluirGenerados)
+                if (plExcluirGenerados && esCodigo)
                 {
                     string nombre = partes[partes.Length - 1];
                     if (nombre.EndsWith(".Designer.cs", StringComparison.OrdinalIgnoreCase) ||
@@ -86,6 +166,8 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
 
         private Archivo mxAnalizarArchivo(string tcRaiz, string tcRuta)
         {
+            if (!mxEsCodigo(tcRuta)) return mxAnalizarArchivoNoCodigo(tcRaiz, tcRuta);
+
             byte[] bytes = File.ReadAllBytes(tcRuta);
             string codigo = File.ReadAllText(tcRuta);
             var info = new FileInfo(tcRuta);
@@ -107,6 +189,30 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
                 archivo.paClases.Add(mxAnalizarClase(declaracion, archivo.pcRuta));
 
             return archivo;
+        }
+
+        /// <summary>
+        /// Análisis físico de un archivo que no es código C#: tamaño, fecha, líneas y hash.
+        /// El hash lógico ignora espacios al inicio y al final de cada línea y las líneas vacías,
+        /// para distinguir un cambio de formato de un cambio de contenido.
+        /// </summary>
+        private Archivo mxAnalizarArchivoNoCodigo(string tcRaiz, string tcRuta)
+        {
+            byte[] bytes = File.ReadAllBytes(tcRuta);
+            string contenido = File.ReadAllText(tcRuta);
+            var info = new FileInfo(tcRuta);
+            List<string> lineas = contenido.Split('\n').Select(l => l.Trim()).Where(l => l.Length > 0).ToList();
+            return new Archivo
+            {
+                pcNombre = info.Name,
+                pcRuta = Utilitarios.mxRutaRelativa(tcRaiz, tcRuta),
+                pnTamano = info.Length,
+                pdFecModificacion = info.LastWriteTime,
+                pnLineas = lineas.Count,
+                pcHashFisico = Utilitarios.mxSha256(bytes),
+                pcHashLogico = Utilitarios.mxSha256(string.Join("\n", lineas)),
+                paLineasNormalizadas = lineas
+            };
         }
 
         private Clase mxAnalizarClase(TypeDeclarationSyntax toTipo, string tcRutaArchivo)

@@ -74,6 +74,7 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
             c.mxAgregar("archivo.agregado", TipoRegla.Fija, 0, 0, M, "Archivo nuevo");
             c.mxAgregar("archivo.eliminado", TipoRegla.Fija, 0, 0, C, "Archivo eliminado");
             c.mxAgregar("archivo.solo_formato", TipoRegla.Fija, 0, 0, N, "Cambio solo de formato o comentarios");
+            c.mxAgregar("archivo.configuracion", TipoRegla.Fija, 0, 0, M, "Cambio en un archivo de configuración, de proyecto o de recursos");
 
             // Clase
             c.mxAgregar("clase.metodos", TipoRegla.DiferenciaAbsoluta, 2, 5, N, "Diferencia en el número de métodos");

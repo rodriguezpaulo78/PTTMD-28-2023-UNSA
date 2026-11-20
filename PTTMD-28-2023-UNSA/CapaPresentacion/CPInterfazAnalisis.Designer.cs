@@ -56,6 +56,9 @@
             this.colNueva = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVariacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAbrirBase = new System.Windows.Forms.Button();
+            this.btnAbrirNueva = new System.Windows.Forms.Button();
+            this.btnInforme = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAnomalias)).BeginInit();
             this.SuspendLayout();
             // 
@@ -336,11 +339,45 @@
             this.colDescripcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colDescripcion.Width = 520;
             // 
+            // btnAbrirBase
+            // 
+            this.btnAbrirBase.Location = new System.Drawing.Point(987, 36);
+            this.btnAbrirBase.Name = "btnAbrirBase";
+            this.btnAbrirBase.Size = new System.Drawing.Size(105, 23);
+            this.btnAbrirBase.TabIndex = 20;
+            this.btnAbrirBase.Text = "Línea base/.zip";
+            this.btnAbrirBase.UseVisualStyleBackColor = true;
+            this.btnAbrirBase.Click += new System.EventHandler(this.btnAbrirBase_Click);
+            // 
+            // btnAbrirNueva
+            // 
+            this.btnAbrirNueva.Location = new System.Drawing.Point(987, 92);
+            this.btnAbrirNueva.Name = "btnAbrirNueva";
+            this.btnAbrirNueva.Size = new System.Drawing.Size(105, 23);
+            this.btnAbrirNueva.TabIndex = 21;
+            this.btnAbrirNueva.Text = "Abrir .zip";
+            this.btnAbrirNueva.UseVisualStyleBackColor = true;
+            this.btnAbrirNueva.Click += new System.EventHandler(this.btnAbrirNueva_Click);
+            // 
+            // btnInforme
+            // 
+            this.btnInforme.Enabled = false;
+            this.btnInforme.Location = new System.Drawing.Point(882, 121);
+            this.btnInforme.Name = "btnInforme";
+            this.btnInforme.Size = new System.Drawing.Size(210, 23);
+            this.btnInforme.TabIndex = 22;
+            this.btnInforme.Text = "Generar Informe (HTML)";
+            this.btnInforme.UseVisualStyleBackColor = true;
+            this.btnInforme.Click += new System.EventHandler(this.btnInforme_Click);
+            // 
             // CPInterfazAnalisis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 715);
+            this.Controls.Add(this.btnInforme);
+            this.Controls.Add(this.btnAbrirNueva);
+            this.Controls.Add(this.btnAbrirBase);
             this.Controls.Add(this.dgvAnomalias);
             this.Controls.Add(this.cboFiltro);
             this.Controls.Add(this.lblFiltro);
@@ -399,5 +436,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colNueva;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVariacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescripcion;
+        private System.Windows.Forms.Button btnAbrirBase;
+        private System.Windows.Forms.Button btnAbrirNueva;
+        private System.Windows.Forms.Button btnInforme;
     }
 }
