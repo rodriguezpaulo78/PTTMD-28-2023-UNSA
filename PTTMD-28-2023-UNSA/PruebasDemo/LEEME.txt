@@ -1,0 +1,27 @@
+PRUEBA DE DEMOSTRACION DEL PROTOTIPO
+
+version_base        Copia del código del proyecto al 16/11/2026.
+version_modificada  La misma copia con 8 cambios inyectados a propósito.
+
+Cambios inyectados y lo que el prototipo debe reportar:
+
+1. Program.cs: se agregó un comentario y espacios.
+   -> Normal. "Cambió solo en formato o comentarios; el código es el mismo."
+2. CNCodigoFuente.mxContarASCII(): se reescribió el cuerpo conservando el nombre
+   (ahora envía datos a un servidor externo y borra un archivo).
+   -> Crítica. "El método fue reescrito casi por completo conservando su nombre."
+3. CapaDatos/ConexionBD.cs: archivo eliminado.
+   -> Crítica. "Archivo eliminado sin reemplazo aparente."
+4. UsuarioCD renombrada a ControlAccesosCD (clase y archivo).
+   -> Moderada. "La clase 'UsuarioCD' desaparece y aparece 'ControlAccesosCD' con 96.7 % de contenido igual."
+5. Constantes.cs movido de CapaDatos/ a Comun/.
+   -> Normal. "Archivo reubicado con el mismo contenido."
+6. CNCodigoFuente.mxContarLOCClase(): visibilidad de public a private.
+   -> Crítica. "Cambió la visibilidad del método."
+7. CNCodigoFuente.mxRealizarAnalisisPrimerNivel(): se quitó el try/catch.
+   -> Moderada. "Se eliminó manejo de excepciones del método."
+8. CNCodigoFuente.mxValidarAcceso(): método nuevo que siempre devuelve true.
+   -> Moderada. "Método nuevo."
+
+Resultado esperado: 16 hallazgos (3 críticos, 3 moderados, 10 normales).
+Si se compara version_base consigo misma: 0 hallazgos y la misma firma estructural.

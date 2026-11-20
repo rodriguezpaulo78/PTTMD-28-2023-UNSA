@@ -28,144 +28,342 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.lblRutaBase = new System.Windows.Forms.Label();
+            this.txcRutaBase = new System.Windows.Forms.TextBox();
+            this.btnExplorarBase = new System.Windows.Forms.Button();
+            this.lblRutaNueva = new System.Windows.Forms.Label();
+            this.txcRutaNueva = new System.Windows.Forms.TextBox();
+            this.btnExplorarNueva = new System.Windows.Forms.Button();
+            this.btnAnalizar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
-            this.btnExplorar = new System.Windows.Forms.Button();
-            this.lblRuta = new System.Windows.Forms.Label();
-            this.txcRuta = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnExportar = new System.Windows.Forms.Button();
             this.lblArbol = new System.Windows.Forms.Label();
             this.trvArbol = new System.Windows.Forms.TreeView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.btnAnalizar = new System.Windows.Forms.Button();
+            this.lblArbolNueva = new System.Windows.Forms.Label();
+            this.trvArbolNueva = new System.Windows.Forms.TreeView();
+            this.lblResumen = new System.Windows.Forms.Label();
+            this.txcResumen = new System.Windows.Forms.TextBox();
+            this.lblFiltro = new System.Windows.Forms.Label();
+            this.cboFiltro = new System.Windows.Forms.ComboBox();
+            this.dgvAnomalias = new System.Windows.Forms.DataGridView();
+            this.colSeveridad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNivel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCambio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colArchivo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colElemento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMetrica = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBase = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNueva = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVariacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAnomalias)).BeginInit();
             this.SuspendLayout();
+            // 
+            // lblRutaBase
+            // 
+            this.lblRutaBase.AutoSize = true;
+            this.lblRutaBase.Location = new System.Drawing.Point(12, 16);
+            this.lblRutaBase.Name = "lblRutaBase";
+            this.lblRutaBase.Size = new System.Drawing.Size(231, 16);
+            this.lblRutaBase.TabIndex = 0;
+            this.lblRutaBase.Text = "Versión base (cierre registrado):";
+            // 
+            // txcRutaBase
+            // 
+            this.txcRutaBase.Location = new System.Drawing.Point(12, 37);
+            this.txcRutaBase.Name = "txcRutaBase";
+            this.txcRutaBase.Size = new System.Drawing.Size(548, 22);
+            this.txcRutaBase.TabIndex = 1;
+            // 
+            // btnExplorarBase
+            // 
+            this.btnExplorarBase.Location = new System.Drawing.Point(582, 36);
+            this.btnExplorarBase.Name = "btnExplorarBase";
+            this.btnExplorarBase.Size = new System.Drawing.Size(97, 23);
+            this.btnExplorarBase.TabIndex = 2;
+            this.btnExplorarBase.Text = "Explorar";
+            this.btnExplorarBase.UseVisualStyleBackColor = true;
+            this.btnExplorarBase.Click += new System.EventHandler(this.btnExplorarBase_Click);
+            // 
+            // lblRutaNueva
+            // 
+            this.lblRutaNueva.AutoSize = true;
+            this.lblRutaNueva.Location = new System.Drawing.Point(12, 72);
+            this.lblRutaNueva.Name = "lblRutaNueva";
+            this.lblRutaNueva.Size = new System.Drawing.Size(126, 16);
+            this.lblRutaNueva.TabIndex = 3;
+            this.lblRutaNueva.Text = "Versión a validar:";
+            // 
+            // txcRutaNueva
+            // 
+            this.txcRutaNueva.Location = new System.Drawing.Point(12, 93);
+            this.txcRutaNueva.Name = "txcRutaNueva";
+            this.txcRutaNueva.Size = new System.Drawing.Size(548, 22);
+            this.txcRutaNueva.TabIndex = 4;
+            // 
+            // btnExplorarNueva
+            // 
+            this.btnExplorarNueva.Location = new System.Drawing.Point(582, 92);
+            this.btnExplorarNueva.Name = "btnExplorarNueva";
+            this.btnExplorarNueva.Size = new System.Drawing.Size(97, 23);
+            this.btnExplorarNueva.TabIndex = 5;
+            this.btnExplorarNueva.Text = "Explorar";
+            this.btnExplorarNueva.UseVisualStyleBackColor = true;
+            this.btnExplorarNueva.Click += new System.EventHandler(this.btnExplorarNueva_Click);
+            // 
+            // btnAnalizar
+            // 
+            this.btnAnalizar.Location = new System.Drawing.Point(697, 36);
+            this.btnAnalizar.Name = "btnAnalizar";
+            this.btnAnalizar.Size = new System.Drawing.Size(170, 79);
+            this.btnAnalizar.TabIndex = 6;
+            this.btnAnalizar.Text = "Realizar Análisis";
+            this.btnAnalizar.UseVisualStyleBackColor = true;
+            this.btnAnalizar.Click += new System.EventHandler(this.btnAnalizar_Click);
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(687, 36);
+            this.btnLimpiar.Location = new System.Drawing.Point(882, 36);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(97, 23);
-            this.btnLimpiar.TabIndex = 8;
+            this.btnLimpiar.TabIndex = 7;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
-            // btnExplorar
+            // btnExportar
             // 
-            this.btnExplorar.Location = new System.Drawing.Point(582, 36);
-            this.btnExplorar.Name = "btnExplorar";
-            this.btnExplorar.Size = new System.Drawing.Size(97, 23);
-            this.btnExplorar.TabIndex = 7;
-            this.btnExplorar.Text = "Cargar";
-            this.btnExplorar.UseVisualStyleBackColor = true;
-            this.btnExplorar.Click += new System.EventHandler(this.btnExplorar_Click);
-            // 
-            // lblRuta
-            // 
-            this.lblRuta.AutoSize = true;
-            this.lblRuta.Location = new System.Drawing.Point(12, 16);
-            this.lblRuta.Name = "lblRuta";
-            this.lblRuta.Size = new System.Drawing.Size(117, 16);
-            this.lblRuta.TabIndex = 6;
-            this.lblRuta.Text = "Ruta del Proyecto:";
-            // 
-            // txcRuta
-            // 
-            this.txcRuta.Location = new System.Drawing.Point(12, 37);
-            this.txcRuta.Name = "txcRuta";
-            this.txcRuta.ReadOnly = true;
-            this.txcRuta.Size = new System.Drawing.Size(548, 22);
-            this.txcRuta.TabIndex = 5;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(582, 92);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(97, 23);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "Explorar";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 72);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(117, 16);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Ruta del Proyecto:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(12, 93);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(548, 22);
-            this.textBox1.TabIndex = 9;
+            this.btnExportar.Enabled = false;
+            this.btnExportar.Location = new System.Drawing.Point(882, 92);
+            this.btnExportar.Name = "btnExportar";
+            this.btnExportar.Size = new System.Drawing.Size(97, 23);
+            this.btnExportar.TabIndex = 8;
+            this.btnExportar.Text = "Exportar";
+            this.btnExportar.UseVisualStyleBackColor = true;
+            this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
             // 
             // lblArbol
             // 
             this.lblArbol.AutoSize = true;
-            this.lblArbol.Location = new System.Drawing.Point(15, 138);
+            this.lblArbol.Location = new System.Drawing.Point(15, 130);
             this.lblArbol.Name = "lblArbol";
-            this.lblArbol.Size = new System.Drawing.Size(118, 16);
-            this.lblArbol.TabIndex = 14;
-            this.lblArbol.Text = "Arbol del Proyecto";
+            this.lblArbol.Size = new System.Drawing.Size(168, 16);
+            this.lblArbol.TabIndex = 9;
+            this.lblArbol.Text = "Árbol de la versión base";
             // 
             // trvArbol
             // 
-            this.trvArbol.Location = new System.Drawing.Point(15, 163);
+            this.trvArbol.Location = new System.Drawing.Point(15, 152);
             this.trvArbol.Name = "trvArbol";
-            this.trvArbol.Size = new System.Drawing.Size(221, 263);
-            this.trvArbol.TabIndex = 13;
+            this.trvArbol.Size = new System.Drawing.Size(255, 190);
+            this.trvArbol.TabIndex = 10;
             // 
-            // label2
+            // lblArbolNueva
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(796, 138);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(118, 16);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "Arbol del Proyecto";
+            this.lblArbolNueva.AutoSize = true;
+            this.lblArbolNueva.Location = new System.Drawing.Point(282, 130);
+            this.lblArbolNueva.Name = "lblArbolNueva";
+            this.lblArbolNueva.Size = new System.Drawing.Size(203, 16);
+            this.lblArbolNueva.TabIndex = 11;
+            this.lblArbolNueva.Text = "Árbol de la versión a validar";
             // 
-            // treeView1
+            // trvArbolNueva
             // 
-            this.treeView1.Location = new System.Drawing.Point(796, 163);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(221, 263);
-            this.treeView1.TabIndex = 15;
+            this.trvArbolNueva.Location = new System.Drawing.Point(282, 152);
+            this.trvArbolNueva.Name = "trvArbolNueva";
+            this.trvArbolNueva.Size = new System.Drawing.Size(255, 190);
+            this.trvArbolNueva.TabIndex = 12;
             // 
-            // btnAnalizar
+            // lblResumen
             // 
-            this.btnAnalizar.Location = new System.Drawing.Point(687, 92);
-            this.btnAnalizar.Name = "btnAnalizar";
-            this.btnAnalizar.Size = new System.Drawing.Size(314, 23);
-            this.btnAnalizar.TabIndex = 17;
-            this.btnAnalizar.Text = "Realizar Analisis";
-            this.btnAnalizar.UseVisualStyleBackColor = true;
+            this.lblResumen.AutoSize = true;
+            this.lblResumen.Location = new System.Drawing.Point(550, 130);
+            this.lblResumen.Name = "lblResumen";
+            this.lblResumen.Size = new System.Drawing.Size(175, 16);
+            this.lblResumen.TabIndex = 13;
+            this.lblResumen.Text = "Resumen de la comparación";
+            // 
+            // txcResumen
+            // 
+            this.txcResumen.Multiline = true;
+            this.txcResumen.ReadOnly = true;
+            this.txcResumen.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txcResumen.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.txcResumen.BackColor = System.Drawing.Color.White;
+            this.txcResumen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txcResumen.Location = new System.Drawing.Point(550, 152);
+            this.txcResumen.Name = "txcResumen";
+            this.txcResumen.Size = new System.Drawing.Size(535, 190);
+            this.txcResumen.TabIndex = 14;
+            // 
+            // lblFiltro
+            // 
+            this.lblFiltro.AutoSize = true;
+            this.lblFiltro.Location = new System.Drawing.Point(15, 356);
+            this.lblFiltro.Name = "lblFiltro";
+            this.lblFiltro.Size = new System.Drawing.Size(60, 16);
+            this.lblFiltro.TabIndex = 15;
+            this.lblFiltro.Text = "Mostrar:";
+            // 
+            // cboFiltro
+            // 
+            this.cboFiltro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFiltro.FormattingEnabled = true;
+            this.cboFiltro.Location = new System.Drawing.Point(80, 352);
+            this.cboFiltro.Name = "cboFiltro";
+            this.cboFiltro.Size = new System.Drawing.Size(220, 24);
+            this.cboFiltro.TabIndex = 16;
+            this.cboFiltro.SelectedIndexChanged += new System.EventHandler(this.cboFiltro_SelectedIndexChanged);
+            // 
+            // dgvAnomalias
+            // 
+            this.dgvAnomalias.AllowUserToAddRows = false;
+            this.dgvAnomalias.AllowUserToDeleteRows = false;
+            this.dgvAnomalias.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvAnomalias.BackgroundColor = System.Drawing.Color.White;
+            this.dgvAnomalias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAnomalias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colSeveridad,
+            this.colNivel,
+            this.colCambio,
+            this.colArchivo,
+            this.colElemento,
+            this.colMetrica,
+            this.colBase,
+            this.colNueva,
+            this.colVariacion,
+            this.colDescripcion});
+            this.dgvAnomalias.Location = new System.Drawing.Point(15, 384);
+            this.dgvAnomalias.Name = "dgvAnomalias";
+            this.dgvAnomalias.ReadOnly = true;
+            this.dgvAnomalias.RowHeadersVisible = false;
+            this.dgvAnomalias.RowHeadersWidth = 51;
+            this.dgvAnomalias.RowTemplate.Height = 24;
+            this.dgvAnomalias.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAnomalias.Size = new System.Drawing.Size(1070, 318);
+            this.dgvAnomalias.TabIndex = 17;
+            // 
+            // colSeveridad
+            // 
+            this.colSeveridad.HeaderText = "Severidad";
+            this.colSeveridad.MinimumWidth = 6;
+            this.colSeveridad.Name = "colSeveridad";
+            this.colSeveridad.ReadOnly = true;
+            this.colSeveridad.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colSeveridad.Width = 80;
+            // 
+            // colNivel
+            // 
+            this.colNivel.HeaderText = "Nivel";
+            this.colNivel.MinimumWidth = 6;
+            this.colNivel.Name = "colNivel";
+            this.colNivel.ReadOnly = true;
+            this.colNivel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colNivel.Width = 70;
+            // 
+            // colCambio
+            // 
+            this.colCambio.HeaderText = "Cambio";
+            this.colCambio.MinimumWidth = 6;
+            this.colCambio.Name = "colCambio";
+            this.colCambio.ReadOnly = true;
+            this.colCambio.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colCambio.Width = 90;
+            // 
+            // colArchivo
+            // 
+            this.colArchivo.HeaderText = "Archivo";
+            this.colArchivo.MinimumWidth = 6;
+            this.colArchivo.Name = "colArchivo";
+            this.colArchivo.ReadOnly = true;
+            this.colArchivo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colArchivo.Width = 210;
+            // 
+            // colElemento
+            // 
+            this.colElemento.HeaderText = "Elemento";
+            this.colElemento.MinimumWidth = 6;
+            this.colElemento.Name = "colElemento";
+            this.colElemento.ReadOnly = true;
+            this.colElemento.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colElemento.Width = 220;
+            // 
+            // colMetrica
+            // 
+            this.colMetrica.HeaderText = "Métrica";
+            this.colMetrica.MinimumWidth = 6;
+            this.colMetrica.Name = "colMetrica";
+            this.colMetrica.ReadOnly = true;
+            this.colMetrica.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colMetrica.Width = 150;
+            // 
+            // colBase
+            // 
+            this.colBase.HeaderText = "Base";
+            this.colBase.MinimumWidth = 6;
+            this.colBase.Name = "colBase";
+            this.colBase.ReadOnly = true;
+            this.colBase.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colBase.Width = 90;
+            // 
+            // colNueva
+            // 
+            this.colNueva.HeaderText = "Nueva";
+            this.colNueva.MinimumWidth = 6;
+            this.colNueva.Name = "colNueva";
+            this.colNueva.ReadOnly = true;
+            this.colNueva.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colNueva.Width = 90;
+            // 
+            // colVariacion
+            // 
+            this.colVariacion.HeaderText = "Variación";
+            this.colVariacion.MinimumWidth = 6;
+            this.colVariacion.Name = "colVariacion";
+            this.colVariacion.ReadOnly = true;
+            this.colVariacion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colVariacion.Width = 100;
+            // 
+            // colDescripcion
+            // 
+            this.colDescripcion.HeaderText = "Descripción";
+            this.colDescripcion.MinimumWidth = 6;
+            this.colDescripcion.Name = "colDescripcion";
+            this.colDescripcion.ReadOnly = true;
+            this.colDescripcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colDescripcion.Width = 520;
             // 
             // CPInterfazAnalisis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1047, 450);
-            this.Controls.Add(this.btnAnalizar);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.treeView1);
-            this.Controls.Add(this.lblArbol);
+            this.ClientSize = new System.Drawing.Size(1100, 715);
+            this.Controls.Add(this.dgvAnomalias);
+            this.Controls.Add(this.cboFiltro);
+            this.Controls.Add(this.lblFiltro);
+            this.Controls.Add(this.txcResumen);
+            this.Controls.Add(this.lblResumen);
+            this.Controls.Add(this.trvArbolNueva);
+            this.Controls.Add(this.lblArbolNueva);
             this.Controls.Add(this.trvArbol);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.lblArbol);
+            this.Controls.Add(this.btnExportar);
             this.Controls.Add(this.btnLimpiar);
-            this.Controls.Add(this.btnExplorar);
-            this.Controls.Add(this.lblRuta);
-            this.Controls.Add(this.txcRuta);
-            this.MaximizeBox = false;
+            this.Controls.Add(this.btnAnalizar);
+            this.Controls.Add(this.btnExplorarNueva);
+            this.Controls.Add(this.txcRutaNueva);
+            this.Controls.Add(this.lblRutaNueva);
+            this.Controls.Add(this.btnExplorarBase);
+            this.Controls.Add(this.txcRutaBase);
+            this.Controls.Add(this.lblRutaBase);
+            this.MinimumSize = new System.Drawing.Size(1118, 600);
             this.Name = "CPInterfazAnalisis";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CPInterfazAnalisis";
+            this.Text = "Validación de Cierre de Proyecto - Comparación de versiones";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAnomalias)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,17 +371,33 @@
 
         #endregion
 
+        private System.Windows.Forms.Label lblRutaBase;
+        private System.Windows.Forms.TextBox txcRutaBase;
+        private System.Windows.Forms.Button btnExplorarBase;
+        private System.Windows.Forms.Label lblRutaNueva;
+        private System.Windows.Forms.TextBox txcRutaNueva;
+        private System.Windows.Forms.Button btnExplorarNueva;
+        private System.Windows.Forms.Button btnAnalizar;
         private System.Windows.Forms.Button btnLimpiar;
-        private System.Windows.Forms.Button btnExplorar;
-        private System.Windows.Forms.Label lblRuta;
-        private System.Windows.Forms.TextBox txcRuta;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnExportar;
         private System.Windows.Forms.Label lblArbol;
         private System.Windows.Forms.TreeView trvArbol;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.Button btnAnalizar;
+        private System.Windows.Forms.Label lblArbolNueva;
+        private System.Windows.Forms.TreeView trvArbolNueva;
+        private System.Windows.Forms.Label lblResumen;
+        private System.Windows.Forms.TextBox txcResumen;
+        private System.Windows.Forms.Label lblFiltro;
+        private System.Windows.Forms.ComboBox cboFiltro;
+        private System.Windows.Forms.DataGridView dgvAnomalias;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSeveridad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNivel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCambio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colArchivo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colElemento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMetrica;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBase;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNueva;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colVariacion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDescripcion;
     }
 }

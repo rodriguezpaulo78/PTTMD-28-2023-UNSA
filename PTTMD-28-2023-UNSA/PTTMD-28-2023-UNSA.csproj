@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -84,11 +84,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CapaControlador\CNCodigoFuente.cs" />
-    <Compile Include="CapaDatos\CDClase.cs" />
-    <Compile Include="CapaDatos\CDMetodo.cs" />
-    <Compile Include="CapaDatos\CDProyecto.cs" />
-    <Compile Include="CapaDatos\DBConection.cs" />
+    <None Include="CapaDatos\AnomaliaCD.cs" />
+    <None Include="CapaDatos\ComparacionCD.cs" />
+    <None Include="CapaDatos\EvaluacionCD.cs" />
+    <None Include="CapaDatos\MetricaCD.cs" />
+    <Compile Include="CapaDatos\Modelos\Anomalia.cs" />
+    <Compile Include="CapaDatos\Modelos\Archivo.cs" />
+    <Compile Include="CapaDatos\Modelos\Clase.cs" />
+    <Compile Include="CapaDatos\Modelos\Comparacion.cs" />
+    <Compile Include="CapaDatos\Modelos\Evaluacion.cs" />
+    <Compile Include="CapaDatos\Modelos\HistorialAcceso.cs" />
+    <Compile Include="CapaDatos\Modelos\Metodo.cs" />
+    <Compile Include="CapaDatos\Modelos\Metrica.cs" />
+    <Compile Include="CapaDatos\Modelos\Catalogo.cs" />
+    <Compile Include="CapaDatos\Modelos\Proyecto.cs" />
+    <Compile Include="CapaDatos\Modelos\Reporte.cs" />
+    <Compile Include="CapaDatos\Modelos\ResultadoComparacion.cs" />
+    <Compile Include="CapaDatos\Modelos\ResultadoMetrica.cs" />
+    <Compile Include="CapaDatos\Modelos\Rol.cs" />
+    <None Include="CapaDatos\ProyectoCD.cs" />
+    <None Include="CapaDatos\ReporteCD.cs" />
+    <None Include="CapaDatos\ResultadoComparacionCD.cs" />
+    <None Include="CapaDatos\ResultadoMetricaCD.cs" />
+    <None Include="CapaDatos\UsuarioCD.cs" />
+    <Compile Include="CapaDatos\ConexionBD.cs" />
+    <Compile Include="CapaDatos\Constantes.cs" />
+    <Compile Include="CapaDatos\Modelos\Usuario.cs" />
     <Compile Include="CapaDatos\ProyectoMetodos.cs" />
     <Compile Include="CapaPresentacion\CPInterfazAnalisis.cs">
       <SubType>Form</SubType>
@@ -114,6 +135,14 @@
     <Compile Include="CapaPresentacion\CPProyectos.Designer.cs">
       <DependentUpon>CPProyectos.cs</DependentUpon>
     </Compile>
+    <Compile Include="CapaDatos\Modelos\CDProyecto.cs" />
+    <Compile Include="CapaControlador\CNAnalisisEstructural.cs" />
+    <Compile Include="CapaControlador\CNComparacionVersiones.cs" />
+    <Compile Include="Reportes\CNReporteResultados.cs" />
+    <Compile Include="CapaDatos\Modelos\Enumeraciones.cs" />
+    <Compile Include="CapaDatos\Modelos\ReglaDeteccion.cs" />
+    <Compile Include="CapaControlador\CNReglasDeteccion.cs" />
+    <Compile Include="Utilidades\Utilitarios.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CapaPresentacion\CPInterfazAnalisis.resx">
@@ -155,6 +184,5 @@
     <Analyzer Include="packages\Microsoft.CodeAnalysis.Analyzers.3.11.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="packages\Microsoft.CodeAnalysis.Analyzers.3.11.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

